@@ -8,12 +8,18 @@
 </head>
 <body>
     <div class="calculator-container">
-        <h2>Calculadora de Rotas</h2>
+        <h2>Calculadora Alto Vale</h2>
         <form id="calculator">
             <div class="input-group">
-                <label for="route">Escolha a rota:</label><br>
-                <button id="normal-btn" type="button" class="route-btn" data-route="normal" onclick="selectRoute(this)">Rota Sapucaia</button>
-                <button id="litoral-btn" type="button" class="route-btn" data-route="litoral" onclick="selectRoute(this)">Rota Capão da Canoa</button>
+                <label for="route">Depósito</label><br>
+                <button id="sapucaia-btn" type="button" class="route-btn" data-route="sapucaia" onclick="selectRoute(this)">Sapucaia</button>
+                <button id="capao-btn" type="button" class="route-btn" data-route="capao" onclick="selectRoute(this)">Capão da Canoa</button>
+            </div>
+
+            <div class="input-group">
+                <label for="vehicle">Veículo</label><br>
+                <button id="passeio-btn" type="button" class="vehicle-btn" data-vehicle="passeio" onclick="selectVehicle(this)">Carro de Passeio</button>
+                <button id="utilitario-btn" type="button" class="vehicle-btn" data-vehicle="utilitario" onclick="selectVehicle(this)">Carro Utilitário</button>
             </div>
 
             <div class="input-group">
