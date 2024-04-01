@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Rotas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <h2>Calculadora de Rotas Alto Vale</h2>
+        <form id="calculator">
+            <div class="input-group">
+                <label for="route">Escolha a rota:</label><br>
+                <button id="normal-btn" type="button" class="route-btn" data-route="normal">Rota Sapucaia</button>
+                <button id="litoral-btn" type="button" class="route-btn" data-route="litoral">Rota Capão da Canoa</button>
+            </div>
+
+            <div class="input-group">
+                <label for="distance">Distância (km):</label><br>
+                <input type="number" id="distance" name="distance">
+            </div>
+
+            <div class="input-group">
+                <label for="stops">Número de Paradas:</label><br>
+                <input type="number" id="stops" name="stops">
+            </div>
+
+            <button type="button" onclick="calculate()">Calcular</button>
+        </form>
+
+        <div class="result" id="result"></div>
+
+        <div class="footer">
+            <p style="font-size: small;">Desenvolvido por LUCAS RENZ</p>
+            <p style="font-size: small;">Faça uma sugestão pelo (51) 9 8962 6944</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
