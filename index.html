@@ -8,16 +8,16 @@
 </head>
 <body>
     <div class="calculator-container">
-        <h2>Calculadora de Rotas Alto Vale</h2>
+        <h2>Calculadora de Rotas</h2>
         <form id="calculator">
             <div class="input-group">
                 <label for="route">Escolha a rota:</label><br>
-                <button id="normal-btn" type="button" class="route-btn" data-route="normal">Rota Sapucaia</button>
-                <button id="litoral-btn" type="button" class="route-btn" data-route="litoral">Rota Capão da Canoa</button>
+                <button id="normal-btn" type="button" class="route-btn" data-route="normal" onclick="selectRoute(this)">Rota Sapucaia</button>
+                <button id="litoral-btn" type="button" class="route-btn" data-route="litoral" onclick="selectRoute(this)">Rota Capão da Canoa</button>
             </div>
 
             <div class="input-group">
-                <label for="distance">Distância (km):</label><br>
+                <label for="distance">KM Rodados:</label><br>
                 <input type="number" id="distance" name="distance">
             </div>
 
@@ -26,12 +26,12 @@
                 <input type="number" id="stops" name="stops">
             </div>
 
-            <button type="button" onclick="calculate()">Calcular</button>
+            <button id="calculate-btn" type="button" onclick="calculate()">Calcular</button>
+            <button id="new-calculation-btn" type="button" onclick="resetCalculator()" style="display: none;">Novo Cálculo</button>
         </form>
 
         <div class="result" id="result"></div>
-
-        </div>
+        <div class="overlay" id="overlay" style="display: none;"></div>
     </div>
 
     <script src="script.js"></script>
