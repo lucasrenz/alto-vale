@@ -49,6 +49,10 @@ button:hover {
     background-color: #1e98af;
 }
 
+.vehicle-btn.selected {
+    background-color: #1e98af;
+}
+
 .result {
     margin-top: 20px;
     display: none;
