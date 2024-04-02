@@ -14,7 +14,23 @@ function selectVehicle(button) {
     button.classList.add('selected');
 }
 
-function calculateCarroPasseioRoute(distance) {
+function calculateCarroPasseioSapucaia(distance) {
+    if (distance <= 100) {
+        return 175;
+    } else if (distance <= 150) {
+        return 205;
+    } else if (distance <= 200) {
+        return 235;
+    } else if (distance <= 250) {
+        return 265;
+    } else if (distance <= 300) {
+        return 295;
+    } else {
+        return 325;
+    }
+}
+
+function calculateCarroPasseioCapao(distance) {
     if (distance <= 100) {
         return 175;
     } else {
@@ -22,7 +38,7 @@ function calculateCarroPasseioRoute(distance) {
     }
 }
 
-function calculateCarroUtilitarioRoute(distance) {
+function calculateCarroUtilitario(distance) {
     if (distance <= 100) {
         return 230;
     } else if (distance <= 150) {
@@ -58,12 +74,12 @@ function calculateEarnings(route, vehicle, distance, stops) {
 
     if (route === "sapucaia") {
         if (vehicle === "passeio") {
-            earnings += calculateCarroPasseioRoute(distance);
+            earnings += calculateCarroPasseioSapucaia(distance);
         } else if (vehicle === "utilitario") {
-            earnings += calculateCarroUtilitarioRoute(distance);
+            earnings += calculateCarroUtilitario(distance);
         }
     } else if (route === "capao" && vehicle === "passeio") {
-        earnings += calculateCarroPasseioRoute(distance);
+        earnings += calculateCarroPasseioCapao(distance);
     } else {
         alert("Rota em Capão da Canoa disponível para cálculo apenas com veículo de passeio. Contate o gestor da calculadora para correção.");
     }
@@ -118,12 +134,11 @@ function calculate() {
 
         result.innerHTML = `
             <ul>
-                <li style="font-size: 15px;">KM Rodados: <span style="font-weight: bold; color: black;">R$ ${total.toFixed(2)}</span></li>
-                <li style="font-size: 15px;">Paradas: <span style="font-weight: bold; color: black;">R$ ${totalStopsCost.toFixed(2)}</span></li>
-                <li>--------------------------------------------------------</li>
-                <li style="font-size: 15px;">Total: <span style="font-weight: bold; color: black;">R$ ${(total + totalStopsCost).toFixed(2)}</span></li>
-                <li style="font-size: 12px;">Valor por KM: <span style="font-weight: bold; color: black;">R$ ${totalValuePerKM.toFixed(2)}</span></li>
-                <li style="font-size: 10px;">Data do Cálculo ${currentDate.toLocaleDateString()} às ${currentDate.toLocaleTimeString()}</li>
+                <li style="font-size: 14px;">KM Rodados: <span style="font-weight: bold; color: black;">R$ ${total.toFixed(2)}</span></li>
+                <li style="font-size: 14px;">Paradas: <span style="font-weight: bold; color: black;">R$ ${totalStopsCost.toFixed(2)}</span></li>
+                <li style="font-size: 14px;">Total: <span style="font-weight: bold; color: black;">R$ ${(total + totalStopsCost).toFixed(2)}</span></li>
+                <li style="font-size: 14px;">Valor por KM: <span style="font-weight: bold; color: black;">R$ ${totalValuePerKM.toFixed(2)}</span></li>
+                <li style="font-size: 12px;">Data do Cálculo ${currentDate.toLocaleDateString()} às ${currentDate.toLocaleTimeString()}</li>
             </ul>
         `;
 
