@@ -1,3 +1,4 @@
+// Função para selecionar a rota
 function selectRoute(button) {
     var routeButtons = document.querySelectorAll('.route-btn');
     routeButtons.forEach(function(btn) {
@@ -6,6 +7,7 @@ function selectRoute(button) {
     button.classList.add('selected');
 }
 
+// Função para selecionar o tipo de veículo
 function selectVehicle(button) {
     var vehicleButtons = document.querySelectorAll('.vehicle-btn');
     vehicleButtons.forEach(function(btn) {
@@ -14,6 +16,7 @@ function selectVehicle(button) {
     button.classList.add('selected');
 }
 
+// Função para calcular os ganhos para carros de passeio em Sapucaia
 function calculateCarroPasseioSapucaia(distance) {
     if (distance <= 100) {
         return 175;
@@ -30,6 +33,7 @@ function calculateCarroPasseioSapucaia(distance) {
     }
 }
 
+// Função para calcular os ganhos para carros de passeio em Capão da Canoa
 function calculateCarroPasseioCapao(distance) {
     if (distance <= 100) {
         return 175;
@@ -38,6 +42,7 @@ function calculateCarroPasseioCapao(distance) {
     }
 }
 
+// Função para calcular os ganhos para carros utilitários
 function calculateCarroUtilitario(distance) {
     if (distance <= 100) {
         return 230;
@@ -54,6 +59,7 @@ function calculateCarroUtilitario(distance) {
     }
 }
 
+// Função para calcular o custo das paradas
 function calculateStopsCost(stops) {
     var cost = 0;
     if (stops <= 60) {
@@ -69,6 +75,7 @@ function calculateStopsCost(stops) {
     return cost;
 }
 
+// Função para calcular os ganhos totais
 function calculateEarnings(route, vehicle, distance, stops) {
     var earnings = 0;
 
@@ -81,14 +88,13 @@ function calculateEarnings(route, vehicle, distance, stops) {
     } else if (route === "capao" && vehicle === "passeio") {
         earnings += calculateCarroPasseioCapao(distance);
     } else {
-        alert("Rota em Capão da Canoa disponível para cálculo apenas com veículo de passeio. Contate o gestor da calculadora para correção.");
+        alert("Rota em Capão da Canoa disponível apenas para cálculo com veículo de passeio. Entre em contato com o gestor da calculadora para correção.");
     }
-
-    earnings += calculateStopsCost(stops);
 
     return earnings;
 }
 
+// Função para realizar o cálculo
 function calculate() {
     var selectedRouteButton = document.querySelector('.route-btn.selected');
     var selectedVehicleButton = document.querySelector('.vehicle-btn.selected');
@@ -116,58 +122,32 @@ function calculate() {
         return;
     }
 
+    var earnings = calculateEarnings(route, vehicle, distance, stops);
+    var totalStopsCost = calculateStopsCost(stops);
+    var total = earnings + totalStopsCost;
+    var totalKM = distance > 100 ? distance : 100;
+    var totalValuePerKM = total / totalKM;
+    var currentDate = new Date();
+
     var result = document.getElementById("result");
-    var calculateBtn = document.getElementById("calculate-btn");
-    var newCalculationBtn = document.getElementById("new-calculation-btn");
-    var overlay = document.getElementById("overlay");
+    result.innerHTML = `
+        <ul>
+            <li style="font-size: 14px;">KM Rodados: <span style="font-weight: bold; color: black;">R$ ${earnings.toFixed(2)}</span></li>
+            <li style="font-size: 14px;">Paradas: <span style="font-weight: bold; color: black;">R$ ${totalStopsCost.toFixed(2)}</span></li>
+            <li>--------------------------------------------------------</li>
+            <li style="font-size: 14px;">Total: <span style="font-weight: bold; color: black;">R$ ${total.toFixed(2)}</span></li>
+            <li style="font-size: 12px;">Valor por KM: <span style="font-weight: bold; color: black;">R$ ${totalValuePerKM.toFixed(2)}</span></li>
+            <li style="font-size: 12px;">Data do Cálculo ${currentDate.toLocaleDateString()} às ${currentDate.toLocaleTimeString()}</li>
+        </ul>
+    `;
 
-    calculateBtn.disabled = true;
-    overlay.style.display = "block";
-    showLoading();
-
-    setTimeout(function() {
-        var total = calculateEarnings(route, vehicle, distance, stops);
-        var totalKM = distance > 100 ? distance : 100; // Mínimo de 100km para calcular o valor por km
-        var totalStopsCost = calculateStopsCost(stops);
-        var totalValuePerKM = total / totalKM;
-        var currentDate = new Date();
-
-        result.innerHTML = `
-            <ul>
-                <li style="font-size: 14px;">KM Rodados: <span style="font-weight: bold; color: black;">R$ ${total.toFixed(2)}</span></li>
-                <li style="font-size: 14px;">Paradas: <span style="font-weight: bold; color: black;">R$ ${totalStopsCost.toFixed(2)}</span></li>
-                <li style="font-size: 14px;">Total: <span style="font-weight: bold; color: black;">R$ ${(total + totalStopsCost).toFixed(2)}</span></li>
-                <li style="font-size: 14px;">Valor por KM: <span style="font-weight: bold; color: black;">R$ ${totalValuePerKM.toFixed(2)}</span></li>
-                <li style="font-size: 12px;">Data do Cálculo ${currentDate.toLocaleDateString()} às ${currentDate.toLocaleTimeString()}</li>
-            </ul>
-        `;
-
-        result.style.display = "block";
-        newCalculationBtn.style.display = "inline";
-
-        calculateBtn.disabled = false; // Reativar o botão de cálculo
-        overlay.style.display = "none"; // Remover o overlay
-        removeLoading(); // Remover o ícone de carregamento
-    }, 2000); // 2 segundos de atraso antes de mostrar o resultado
+    result.style.display = "block";
 }
 
-function showLoading() {
-    var loadingIcon = document.createElement("div");
-    loadingIcon.classList.add("loading-icon");
-    document.body.appendChild(loadingIcon);
-}
-
-function removeLoading() {
-    var loadingIcon = document.querySelector(".loading-icon");
-    if (loadingIcon) {
-        loadingIcon.remove();
-    }
-}
-
+// Função para redefinir a calculadora
 function resetCalculator() {
     document.getElementById("calculator").reset();
     document.getElementById("result").style.display = "none";
-    document.getElementById("new-calculation-btn").style.display = "none";
     document.querySelector('.route-btn.selected').classList.remove('selected'); // Remover seleção de rota
     document.querySelector('.vehicle-btn.selected').classList.remove('selected'); // Remover seleção de veículo
 }
